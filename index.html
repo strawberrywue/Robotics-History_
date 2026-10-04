@@ -112,7 +112,7 @@
                 <svg class="w-12 h-12 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             </div>
             <h2 class="text-3xl font-bold text-white mb-2">Quiz Completed!</h2>
-            <p class="text-slate-300 text-lg mb-6">You scored <span id="final-score" class="text-2xl font-bold text-blue-400">0</span> out of <span id="total-questions" class="font-bold">15</span>.</p>
+            <p class="text-slate-300 text-lg mb-6">You scored <span id="final-score" class="text-2xl font-bold text-blue-400">0</span> out of <span id="total-questions" class="font-bold">70</span>.</p>
             
             <button onclick="restartQuiz()" class="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold rounded-xl shadow-lg shadow-purple-500/30 transform hover:-translate-y-1 transition-all duration-200">
                 Retake Quiz
@@ -122,83 +122,78 @@
     </main>
 
     <script>
-        // Quiz Data based exactly on the provided 15 facts
+        // Quiz Data containing exactly 70 distinct questions based on the provided notes
         const quizData = [
-            {
-                question: "Who invented the textile machine operated by punch cards in 1801?",
-                options: ["Charles Babbage", "George Boole", "Joseph Jacquard", "Nikola Tesla"],
-                answer: "Joseph Jacquard"
-            },
-            {
-                question: "Who introduced the word “robot” in the 1921 play Rossum’s Universal Robots?",
-                options: ["Isaac Asimov", "Karel Čapek", "George Devol", "Blaise Pascal"],
-                answer: "Karel Čapek"
-            },
-            {
-                question: "Who formulated the “Three Laws of Robotics” in 1939?",
-                options: ["Norbert Wiener", "Alan Turing", "Isaac Asimov", "Karel Čapek"],
-                answer: "Isaac Asimov"
-            },
-            {
-                question: "Who designed the first programmable robot in 1954 and coined 'universal automation'?",
-                options: ["Joseph Engelberger", "George Devol", "Marvin Minsky", "Hiroshi Makino"],
-                answer: "George Devol"
-            },
-            {
-                question: "Who built an early version of the calculator in 1642?",
-                options: ["Benjamin Franklin", "Thomas Edison", "Charles Babbage", "Blaise Pascal"],
-                answer: "Blaise Pascal"
-            },
-            {
-                question: "Who designed the analytical engine in 1835?",
-                options: ["Charles Babbage", "George Boole", "Joseph Jacquard", "Nikola Tesla"],
-                answer: "Charles Babbage"
-            },
-            {
-                question: "Who published Mathematical Analysis of Logic in 1847, later known as Boolean algebra?",
-                options: ["Alan Turing", "Blaise Pascal", "George Boole", "Charles Babbage"],
-                answer: "George Boole"
-            },
-            {
-                question: "Who designed the world's first AC power plant at Niagara Falls in 1895?",
-                options: ["Thomas Edison", "Nikola Tesla", "George Westinghouse", "Benjamin Franklin"],
-                answer: "Nikola Tesla"
-            },
-            {
-                question: "Which university created WABOT-1, the world's first anthropomorphic robot, between 1970-1973?",
-                options: ["MIT", "Stanford University", "National University of Singapore", "Waseda University"],
-                answer: "Waseda University"
-            },
-            {
-                question: "Which company introduced the P2 bipedal humanoid robot in 1997?",
-                options: ["Toyota", "Kawasaki", "Honda", "Tesla"],
-                answer: "Honda"
-            },
-            {
-                question: "What famous robot did Honda create in 2000?",
-                options: ["ASIMO", "WABOT-1", "SCOT", "P2"],
-                answer: "ASIMO"
-            },
-            {
-                question: "Which company became the first privately owned entity to dock the robotic Dragon capsule with the ISS in 2012?",
-                options: ["Blue Origin", "SpaceX", "Boeing", "Lockheed Martin"],
-                answer: "SpaceX"
-            },
-            {
-                question: "Which Mars rover pioneered the autonomous 'Sky Crane' landing method?",
-                options: ["Sojourner", "Spirit", "Perseverance", "Curiosity"],
-                answer: "Curiosity"
-            },
-            {
-                question: "Which Mars rover deployed Ingenuity, the first helicopter to fly on another planet?",
-                options: ["Opportunity", "Curiosity", "Perseverance", "Spirit"],
-                answer: "Perseverance"
-            },
-            {
-                question: "Who invented the SCARA robotic architecture in 1978?",
-                options: ["Professor Hiroshi Makino", "George Devol", "Joseph Engelberger", "Marvin Minsky"],
-                answer: "Professor Hiroshi Makino"
-            }
+            { question: "Who invented the textile machine operated by punch cards in 1801?", options: ["Charles Babbage", "George Boole", "Joseph Jacquard", "Nikola Tesla"], answer: "Joseph Jacquard" },
+            { question: "In what year did Joseph-Marie Jacquard invent the Jacquard loom?", options: ["1752", "1801", "1804", "1835"], answer: "1804" },
+            { question: "What control system did the Jacquard loom utilize?", options: ["Hydraulics", "Punch cards", "Magnetic tape", "Vacuum tubes"], answer: "Punch cards" },
+            { question: "Who designed a motorized crane with a gripper in 1892?", options: ["Seward Babbitt", "Thomas Edison", "Raymond Goertz", "George Westinghouse"], answer: "Seward Babbitt" },
+            { question: "What was the purpose of Seward Babbitt's 1892 motorized crane?", options: ["Building skyscrapers", "To remove ingots from a furnace", "Loading ships", "Mining coal"], answer: "To remove ingots from a furnace" },
+            { question: "In which 1921 play did the word 'robot' first appear?", options: ["Runaround", "Metropolis", "Rossum’s Universal Robots", "Cybernetics"], answer: "Rossum’s Universal Robots" },
+            { question: "Who wrote the play Rossum’s Universal Robots?", options: ["Isaac Asimov", "Karel Čapek", "George Devol", "Alan Turing"], answer: "Karel Čapek" },
+            { question: "What does the Czech word 'robota' mean?", options: ["Mechanical man", "Artificial intelligence", "Serf or forced labor", "Metal worker"], answer: "Serf or forced labor" },
+            { question: "Who formulated the 'Three Laws of Robotics'?", options: ["Norbert Wiener", "Alan Turing", "Isaac Asimov", "Karel Čapek"], answer: "Isaac Asimov" },
+            { question: "In what year did Isaac Asimov introduce robots designed for humanity and safety?", options: ["1921", "1939", "1942", "1954"], answer: "1939" },
+            { question: "Which 1942 short story by Isaac Asimov featured the Three Laws of Robotics?", options: ["Runaround", "I, Robot", "Bicentennial Man", "Foundation"], answer: "Runaround" },
+            { question: "Who patented a general-purpose playback device for controlling machines in 1946?", options: ["Joseph Engelberger", "George Devol", "Marvin Minsky", "Hiroshi Makino"], answer: "George Devol" },
+            { question: "Who designed the first programmable robot in 1954?", options: ["Raymond Goertz", "Joseph Engelberger", "George Devol", "Norbert Wiener"], answer: "George Devol" },
+            { question: "Who coined the term 'universal automation'?", options: ["George Devol", "Joseph Engelberger", "Karel Čapek", "Isaac Asimov"], answer: "George Devol" },
+            { question: "Who joined George Devol in 1956 to form Unimation?", options: ["Marvin Minsky", "Joseph Engelberger", "Raymond Goertz", "Alan Turing"], answer: "Joseph Engelberger" },
+            { question: "What was the name of the first successful robot manufacturing company?", options: ["Kawasaki Robotics", "Honda Motor Co.", "Unimation", "Intuitive Surgical"], answer: "Unimation" },
+            { question: "In 1961, George Devol received a patent for what kind of robot?", options: ["Bipedal humanoid", "Arm-type industrial robot", "Autonomous rover", "Tele-operator"], answer: "Arm-type industrial robot" },
+            { question: "Which automotive company widely used the Unimate arm-type industrial robot?", options: ["Ford", "Toyota", "GM", "Honda"], answer: "GM" },
+            { question: "Who published the book Cybernetics in 1948?", options: ["Norbert Wiener", "Warren S. McCulloch", "Alan Turing", "Walt Pitts"], answer: "Norbert Wiener" },
+            { question: "What topic did Norbert Wiener's book 'Cybernetics' describe?", options: ["AC power systems", "Boolean algebra", "Communications and control in electronic, mechanical, and biological systems", "Orbital mechanics"], answer: "Communications and control in electronic, mechanical, and biological systems" },
+            { question: "Who designed a tele-operator with an articulated arm in 1951?", options: ["George Devol", "Marvin Minsky", "Raymond Goertz", "Seward Babbitt"], answer: "Raymond Goertz" },
+            { question: "For which commission did Raymond Goertz design the 1951 tele-operator?", options: ["Atomic Energy Commission", "Federal Communications Commission", "Space Exploration Commission", "National Science Foundation"], answer: "Atomic Energy Commission" },
+            { question: "Who built an early version of the calculator in 1642?", options: ["Benjamin Franklin", "Thomas Edison", "Charles Babbage", "Blaise Pascal"], answer: "Blaise Pascal" },
+            { question: "Who conducted a kite experiment in 1752 proving lightning is electricity?", options: ["Benjamin Franklin", "Nikola Tesla", "Thomas Edison", "Joseph John Thomson"], answer: "Benjamin Franklin" },
+            { question: "Who designed the analytical engine in 1835?", options: ["Charles Babbage", "George Boole", "Joseph Jacquard", "Blaise Pascal"], answer: "Charles Babbage" },
+            { question: "What was a key feature of Charles Babbage's analytical engine?", options: ["Hydraulic power", "Processor and memory functions", "Radio control", "AC induction"], answer: "Processor and memory functions" },
+            { question: "Who published Mathematical Analysis of Logic in 1847?", options: ["Alan Turing", "Blaise Pascal", "George Boole", "Charles Babbage"], answer: "George Boole" },
+            { question: "George Boole's work laid the foundation for which type of math widely used in computing?", options: ["Calculus", "Boolean algebra", "Trigonometry", "Linear algebra"], answer: "Boolean algebra" },
+            { question: "Who created the concept for the modern AC induction motor in 1882?", options: ["Thomas Edison", "Nikola Tesla", "George Westinghouse", "Benjamin Franklin"], answer: "Nikola Tesla" },
+            { question: "Where did Nikola Tesla design the first AC power plant in 1895?", options: ["Hoover Dam", "Niagara Falls", "New York City", "London"], answer: "Niagara Falls" },
+            { question: "What design did Nikola Tesla patent in 1898?", options: ["Talking doll", "Analytical engine", "Radio-controlled boat", "AC power plant"], answer: "Radio-controlled boat" },
+            { question: "Who invented a talking doll in 1887?", options: ["Nikola Tesla", "Thomas Edison", "Charles Babbage", "George Boole"], answer: "Thomas Edison" },
+            { question: "Who conducted experiments in 1897 to infer the existence of the electron?", options: ["Joseph John Thomson", "Benjamin Franklin", "Nikola Tesla", "Thomas Edison"], answer: "Joseph John Thomson" },
+            { question: "Who published a 1937 paper on mathematics of fundamental importance to future computers?", options: ["Alan Turing", "George Boole", "Norbert Wiener", "Warren S. McCulloch"], answer: "Alan Turing" },
+            { question: "Who co-authored 'A Logical Calculus of the Ideas Immanent in Nervous Activity' with Walt Pitts?", options: ["Alan Turing", "Warren S. McCulloch", "Norbert Wiener", "Marvin Minsky"], answer: "Warren S. McCulloch" },
+            { question: "What was the main focus of McCulloch and Pitts in their 1943 publication?", options: ["AC power distribution", "To understand how the brain works / thinking computers", "Robotics laws", "Space exploration"], answer: "To understand how the brain works / thinking computers" },
+            { question: "Which company started producing hydraulically powered robots under the Unimation license in 1968?", options: ["Kawasaki Robotics", "Honda", "Toyota", "Sony"], answer: "Kawasaki Robotics" },
+            { question: "Who developed a robot arm based on the design of a tentacle in 1968?", options: ["Marvin Minsky", "Hiroshi Makino", "George Devol", "Raymond Goertz"], answer: "Marvin Minsky" },
+            { question: "How many joints did Marvin Minsky's tentacle arm have?", options: ["6", "8", "12", "15"], answer: "12" },
+            { question: "Which university created WABOT-1?", options: ["MIT", "Stanford University", "Waseda University", "National University of Singapore"], answer: "Waseda University" },
+            { question: "What major distinction does WABOT-1 hold in robotics history?", options: ["First rover on Mars", "First anthropomorphic robot", "First tele-operator", "First medical robot"], answer: "First anthropomorphic robot" },
+            { question: "What robot did Waseda University create in 2000 to reproduce human vocal movement?", options: ["ASIMO", "WABOT-2", "Waseda Talker No. 1", "P3"], answer: "Waseda Talker No. 1" },
+            { question: "Which company introduced the P2 bipedal humanoid robot in 1997?", options: ["Toyota", "Kawasaki", "Honda", "Tesla"], answer: "Honda" },
+            { question: "What advanced robot did Honda create in 2000 using lessons from P2 and P3?", options: ["ASIMO", "WABOT-1", "SCOT", "Atlas"], answer: "ASIMO" },
+            { question: "What does ASIMO stand for?", options: ["Automated System in Mechanical Operations", "Advanced Step in Innovative Mobility", "Articulated System of Intelligent Motion", "Anthropomorphic Step in Machine Optimization"], answer: "Advanced Step in Innovative Mobility" },
+            { question: "Who introduced the da Vinci medical robotic system in 1999?", options: ["Intuitive Surgical Inc.", "Honda", "Kawasaki Robotics", "Waseda University"], answer: "Intuitive Surgical Inc." },
+            { question: "Which company became the first privately owned entity to dock a robotic capsule with the ISS in 2012?", options: ["Blue Origin", "SpaceX", "Boeing", "Lockheed Martin"], answer: "SpaceX" },
+            { question: "What is the name of the SpaceX robotic capsule docked with the ISS?", options: ["Falcon", "Apollo", "Dragon", "Orion"], answer: "Dragon" },
+            { question: "Who is the founder of SpaceX mentioned in the notes?", options: ["Jeff Bezos", "Elon Musk", "Richard Branson", "Marcelo Ang"], answer: "Elon Musk" },
+            { question: "What does the acronym SCOT stand for?", options: ["Systematic Computer Operating Technology", "Shared Computer Operated Transport", "Self-driving Car On Tracks", "Smart Computer Operated Transit"], answer: "Shared Computer Operated Transport" },
+            { question: "Which two institutions collaborated to develop SCOT?", options: ["Stanford & MIT", "NUS & MIT", "Waseda & De la Salle", "Harvard & MIT"], answer: "NUS & MIT" },
+            { question: "Who led the development of SCOT?", options: ["Elon Musk", "Marcelo Ang", "Hiroshi Makino", "Marvin Minsky"], answer: "Marcelo Ang" },
+            { question: "What type of vehicle is SCOT?", options: ["Space rover", "Bomb disposal unit", "Autonomous driverless car", "Medical transport"], answer: "Autonomous driverless car" },
+            { question: "What does the acronym BRAVE stand for?", options: ["Basic Rover for Automated Vehicle Exploration", "Bomb Removal Automated Vehicle", "Bipedal Robot And Vehicle Explorer", "Biometric Robotic Automated Vehicle Entity"], answer: "Bomb Removal Automated Vehicle" },
+            { question: "Which university developed the BRAVE robot?", options: ["National University of Singapore", "De la Salle University", "Waseda University", "Yamanashi University"], answer: "De la Salle University" },
+            { question: "Which was the first rover on Mars, launched in 1996?", options: ["Spirit", "Sojourner", "Curiosity", "Opportunity"], answer: "Sojourner" },
+            { question: "What major discovery did the Sojourner rover make?", options: ["Hematite 'blueberries'", "Evidence of ancient liquid water", "Complex organic molecules", "Volcanic glass"], answer: "Evidence of ancient liquid water" },
+            { question: "Which Mars rover, launched in June 2003, got permanently stuck in soft sand?", options: ["Sojourner", "Spirit", "Perseverance", "Curiosity"], answer: "Spirit" },
+            { question: "What did the Spirit rover find evidence of besides past water?", options: ["Ancient explosive volcanic activity", "Alien life", "Underground rivers", "Organic molecules"], answer: "Ancient explosive volcanic activity" },
+            { question: "Which rover discovered hematite 'blueberries' proving ancient acidic water existed?", options: ["Opportunity", "Spirit", "Curiosity", "Perseverance"], answer: "Opportunity" },
+            { question: "Which rover holds the off-Earth driving record at 28.06 miles?", options: ["Curiosity", "Sojourner", "Spirit", "Opportunity"], answer: "Opportunity" },
+            { question: "Which Mars rover pioneered the autonomous 'Sky Crane' landing method?", options: ["Sojourner", "Spirit", "Perseverance", "Curiosity"], answer: "Curiosity" },
+            { question: "What did the Curiosity rover discover on Mars?", options: ["Hematite blueberries", "Complex organic molecules and ancient habitable lake beds", "Active volcanoes", "Liquid water on the surface"], answer: "Complex organic molecules and ancient habitable lake beds" },
+            { question: "Which rover, launched in July 2020, is caching rock cores for a future Earth-return mission?", options: ["Opportunity", "Curiosity", "Perseverance", "Spirit"], answer: "Perseverance" },
+            { question: "What is the name of the first helicopter to fly on another planet, deployed by Perseverance?", options: ["Ingenuity", "Discovery", "Explorer", "Pioneer"], answer: "Ingenuity" },
+            { question: "What does SCARA stand for?", options: ["Smart Computer Automated Robot Arm", "Selective Compliance Articulated Robot Arm", "Systematic Control And Robotic Articulation", "Standard Compliance And Robotic Arm"], answer: "Selective Compliance Articulated Robot Arm" },
+            { question: "Who invented the SCARA robotic architecture?", options: ["Professor Hiroshi Makino", "George Devol", "Joseph Engelberger", "Marcelo Ang"], answer: "Professor Hiroshi Makino" },
+            { question: "At which university was SCARA invented in 1978?", options: ["Waseda University", "Yamanashi University", "National University of Singapore", "De la Salle University"], answer: "Yamanashi University" },
+            { question: "Who coined the phrase 'Data is the new oil'?", options: ["Alan Turing", "Norbert Wiener", "Clive Humby", "Elon Musk"], answer: "Clive Humby" },
+            { question: "What is the scientific process of extracting valuable info from structured/unstructured data called?", options: ["Data Mining", "Machine Learning", "Data Science", "Artificial Intelligence"], answer: "Data Science" }
         ];
 
         // State variables
@@ -258,7 +253,7 @@
             if (selectedOption === correctAnswer) {
                 score++;
                 selectedButton.classList.add('correct-answer');
-                feedbackMessage.innerText = "Correct! ✨";
+                feedbackMessage.innerText = "Correct!";
                 feedbackMessage.className = "mt-6 text-center text-lg font-bold text-emerald-400";
             } else {
                 selectedButton.classList.add('wrong-answer');
