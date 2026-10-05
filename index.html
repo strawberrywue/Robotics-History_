@@ -1,331 +1,279 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Robotics & Computing History Quiz</title>
-    <!-- Use Tailwind CSS for modern, responsive styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Custom base styles and animations */
-        body {
-            /* A tech-inspired gradient background */
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Robotics & Tech History Quiz</title>
+  <style>
+    /* Sleek Glassmorphism Dark Theme */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #1e1e2f, #151522);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      color: #fff;
+    }
 
-        /* Glassmorphism utility for the quiz card */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
+    #quiz-app {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 30px;
+      max-width: 600px;
+      width: 90%;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
 
-        /* Smooth transitions for the option buttons */
-        .option-btn {
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+    h1 {
+      text-align: center;
+      margin-top: 0;
+      color: #4facfe;
+    }
 
-        /* Prevent clicking after an answer is selected */
-        .disabled-btn {
-            pointer-events: none;
-        }
+    #progress-container {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      height: 8px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
 
-        /* Specific styles injected dynamically via JS for correct/incorrect */
-        .correct-answer {
-            background-color: rgba(16, 185, 129, 0.2) !important;
-            border-color: #10b981 !important;
-            color: #34d399 !important;
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
-        }
+    #progress-bar {
+      height: 100%;
+      width: 0%;
+      background: #4facfe;
+      transition: width 0.3s ease;
+    }
 
-        .wrong-answer {
-            background-color: rgba(244, 63, 94, 0.2) !important;
-            border-color: #f43f5e !important;
-            color: #fb7185 !important;
-            box-shadow: 0 0 15px rgba(244, 63, 94, 0.3);
-        }
+    .question {
+      font-size: 1.3em;
+      font-weight: 600;
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
 
-        /* Fade-in animation for questions */
-        .fade-in {
-            animation: fadeIn 0.4s ease-in-out;
-        }
+    .option-btn {
+      display: block;
+      width: 100%;
+      padding: 12px 15px;
+      margin: 10px 0;
+      font-size: 1em;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+    }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+    .option-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .option-btn:disabled {
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .correct-btn {
+      background: rgba(40, 167, 69, 0.4) !important;
+      border-color: #28a745 !important;
+    }
+
+    .wrong-btn {
+      background: rgba(220, 53, 69, 0.4) !important;
+      border-color: #dc3545 !important;
+    }
+
+    #feedback {
+      margin-top: 15px;
+      font-weight: bold;
+      text-align: center;
+      min-height: 24px;
+    }
+
+    .score-text {
+      text-align: center;
+      font-size: 1.5em;
+      color: #4facfe;
+    }
+  </style>
 </head>
-<body class="min-h-screen text-slate-200 flex items-center justify-center p-4">
+<body>
 
-    <!-- Main Quiz Container -->
-    <main class="glass-card w-full max-w-3xl rounded-3xl p-6 sm:p-10 relative overflow-hidden">
-        
-        <!-- Decoration / Glow effects behind the card -->
-        <div class="absolute -top-24 -right-24 w-48 h-48 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
-        <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+  <div id="quiz-app">
+    <h1 id="quiz-title">Robotics History Quiz</h1>
+    <div id="progress-container"><div id="progress-bar"></div></div>
+    
+    <div id="quiz-container">
+      <div class="question" id="question-text">Loading question...</div>
+      <div id="options-container"></div>
+    </div>
+    <div id="feedback"></div>
+  </div>
 
-        <!-- Header Section -->
-        <header class="relative z-10 mb-8 text-center">
-            <h1 class="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 mb-2">
-                Robotics & Computing History
-            </h1>
-            <p class="text-slate-400 text-sm sm:text-base">Test your knowledge on the evolution of technology.</p>
-        </header>
+  <script>
+    const quizData = [
+      { question: "In 1801, who invented the textile machine operated by punch cards?", options: ["Charles Babbage", "Joseph Jacquard", "George Devol", "Blaise Pascal"], answer: "Joseph Jacquard" },
+      { question: "Who designed a motorized crane with a gripper to remove ingots from a furnace in 1892?", options: ["Seward Babbitt", "Thomas Edison", "George Boole", "Raymond Goertz"], answer: "Seward Babbitt" },
+      { question: "In what year did the word 'robot' first appear in a play?", options: ["1892", "1921", "1939", "1946"], answer: "1921" },
+      { question: "What play first referenced the word 'robot'?", options: ["Runaround", "Cybernetics", "Rossum’s Universal Robots", "The Analytical Engine"], answer: "Rossum’s Universal Robots" },
+      { question: "Who wrote the play 'Rossum’s Universal Robots'?", options: ["Isaac Asimov", "Karel Čapek", "George Devol", "Norbert Wiener"], answer: "Karel Čapek" },
+      { question: "The word 'robot' comes from the Czech word 'robota', which means:", options: ["Steel machine", "Artificial mind", "Serf or forced labor", "Helper"], answer: "Serf or forced labor" },
+      { question: "Who introduced robots designed for humanity and safety in his 1939 science fiction writings?", options: ["Karel Čapek", "Alan Turing", "Isaac Asimov", "Joseph Engelberger"], answer: "Isaac Asimov" },
+      { question: "Who formulated the 'Three Laws of Robotics'?", options: ["Isaac Asimov", "George Devol", "Norbert Wiener", "Marvin Minsky"], answer: "Isaac Asimov" },
+      { question: "In 1946, who patented a general-purpose playback device for controlling machines?", options: ["George Devol", "Joseph Engelberger", "Alan Turing", "Thomas Edison"], answer: "George Devol" },
+      { question: "Who published 'Cybernetics' in 1948, describing communications and control systems?", options: ["Norbert Wiener", "Warren S. McCulloch", "Alan Turing", "George Boole"], answer: "Norbert Wiener" },
+      { question: "In 1951, who designed a tele-operator equipped with an articulated arm for the Atomic Energy Commission?", options: ["Marvin Minsky", "Raymond Goertz", "Joseph Engelberger", "Nikola Tesla"], answer: "Raymond Goertz" },
+      { question: "Who designed the first programmable robot in 1954?", options: ["George Devol", "Blaise Pascal", "Raymond Goertz", "Isaac Asimov"], answer: "George Devol" },
+      { question: "Who coined the term 'universal automation'?", options: ["George Devol", "Joseph Engelberger", "Alan Turing", "Karel Čapek"], answer: "George Devol" },
+      { question: "Who joined George Devol in 1956 to form the first successful robot manufacturing company?", options: ["Joseph Engelberger", "Marvin Minsky", "Seward Babbitt", "Norbert Wiener"], answer: "Joseph Engelberger" },
+      { question: "What was the name of the first successful robot manufacturing company formed by Devol and Engelberger?", options: ["Unimation", "Kawasaki Robotics", "SpaceX", "Honda Robotics"], answer: "Unimation" },
+      { question: "In 1642, who built an early version of the calculator that was later mass-produced?", options: ["Charles Babbage", "Blaise Pascal", "Benjamin Franklin", "George Boole"], answer: "Blaise Pascal" },
+      { question: "Who conducted the famous kite experiment in 1752 proving lightning is electricity?", options: ["Benjamin Franklin", "Nikola Tesla", "Thomas Edison", "Joseph John Thomson"], answer: "Benjamin Franklin" },
+      { question: "What automation system utilizing punch cards did Joseph-Marie Jacquard invent in 1804?", options: ["Jacquard loom", "Analytical engine", "Tele-operator", "Playback device"], answer: "Jacquard loom" },
+      { question: "In 1835, who designed an analytical engine complete with processor and memory functions?", options: ["Blaise Pascal", "Charles Babbage", "George Boole", "Alan Turing"], answer: "Charles Babbage" },
+      { question: "Who published 'Mathematical Analysis of Logic' in 1847?", options: ["Alan Turing", "George Boole", "Charles Babbage", "Isaac Asimov"], answer: "George Boole" },
+      { question: "What type of math, widely used in computing, was developed by George Boole?", options: ["Calculus", "Linear Algebra", "Boolean algebra", "Trigonometry"], answer: "Boolean algebra" },
+      { question: "Who created the concept for the modern AC induction motor in 1882?", options: ["Thomas Edison", "Nikola Tesla", "George Devol", "Seward Babbitt"], answer: "Nikola Tesla" },
+      { question: "Who invented a talking doll in 1887 that was marketed to the public in 1890?", options: ["Thomas Edison", "Nikola Tesla", "Benjamin Franklin", "Charles Babbage"], answer: "Thomas Edison" },
+      { question: "Who designed the world's first AC power plant at Niagara Falls in 1895?", options: ["Thomas Edison", "Nikola Tesla", "Joseph John Thomson", "Joseph Engelberger"], answer: "Nikola Tesla" },
+      { question: "Who created experiments in 1897 that helped infer the existence of the electron?", options: ["Nikola Tesla", "Joseph John Thomson", "Alan Turing", "Thomas Edison"], answer: "Joseph John Thomson" },
+      { question: "Who patented a design for a radio-controlled boat in 1898?", options: ["Nikola Tesla", "Thomas Edison", "Benjamin Franklin", "George Devol"], answer: "Nikola Tesla" },
+      { question: "In 1937, who published a paper on mathematics of fundamental importance to future computer development?", options: ["Alan Turing", "George Boole", "Charles Babbage", "Norbert Wiener"], answer: "Alan Turing" },
+      { question: "In which 1942 short story did Isaac Asimov give the world his three laws of robotics?", options: ["Runaround", "I, Robot", "Cybernetics", "Rossum’s Universal Robots"], answer: "Runaround" },
+      { question: "Who published 'A Logical Calculus of the Ideas Immanent in Nervous Activity' in 1943?", options: ["Norbert Wiener", "Warren S. McCulloch and Walt Pitts", "Marvin Minsky", "Alan Turing"], answer: "Warren S. McCulloch and Walt Pitts" },
+      { question: "Who received a 1961 patent for an arm-type industrial robot used by GM?", options: ["George Devol", "Marvin Minsky", "Joseph Engelberger", "Raymond Goertz"], answer: "George Devol" },
+      { question: "Which company started producing hydraulically powered robots under the Unimation license in 1968?", options: ["Honda", "Kawasaki Robotics", "SpaceX", "Makino"], answer: "Kawasaki Robotics" },
+      { question: "Who developed a robot arm based on a tentacle in 1968?", options: ["Marvin Minsky", "Raymond Goertz", "George Devol", "Hiroshi Makino"], answer: "Marvin Minsky" },
+      { question: "How many joints did Marvin Minsky's tentacle arm have?", options: ["6", "8", "12", "15"], answer: "12" },
+      { question: "Between 1970 and 1973, Waseda University created the world's first anthropomorphic robot named:", options: ["ASIMO", "P2", "WABOT-1", "SCARA"], answer: "WABOT-1" },
+      { question: "Which institution created WABOT-1?", options: ["Waseda University", "MIT", "De La Salle University", "National University of Singapore"], answer: "Waseda University" },
+      { question: "In 1997, Honda introduced which bipedal humanoid robot that walks smoothly for over 30 minutes?", options: ["ASIMO", "P2", "P3", "WABOT-1"], answer: "P2" },
+      { question: "Which company created the P2 bipedal humanoid robot?", options: ["Honda", "Kawasaki Robotics", "SpaceX", "Intuitive Surgical"], answer: "Honda" },
+      { question: "In 1999, Intuitive Surgical Inc. introduced which medical robotic system?", options: ["da Vinci", "ASIMO", "SCARA", "Sojourner"], answer: "da Vinci" },
+      { question: "In what year was the da Vinci system approved for laparoscopic surgery?", options: ["1997", "1999", "2000", "2003"], answer: "2000" },
+      { question: "What does ASIMO stand for?", options: ["Automated System in Mobility", "Advanced Step in Innovative Mobility", "Articulated System in Motor Operations", "Advanced Stepping in Mechanical Optimization"], answer: "Advanced Step in Innovative Mobility" },
+      { question: "Which company created ASIMO in 2000?", options: ["Honda", "Kawasaki", "SpaceX", "Waseda University"], answer: "Honda" },
+      { question: "In 2000, what did Waseda University create to reproduce human vocal movement?", options: ["Waseda Talker No. 1", "ASIMO Vocal", "WABOT Voice", "Cybernetic Voice"], answer: "Waseda Talker No. 1" },
+      { question: "In 2012, which became the first privately owned company to launch and dock a robotic capsule with the ISS?", options: ["Blue Origin", "SpaceX", "Boeing", "Lockheed Martin"], answer: "SpaceX" },
+      { question: "What is the name of SpaceX's robotic capsule?", options: ["Apollo", "Falcon", "Dragon", "Eagle"], answer: "Dragon" },
+      { question: "Who founded the privately owned company SpaceX?", options: ["Elon Musk", "Jeff Bezos", "Nikola Tesla", "Thomas Edison"], answer: "Elon Musk" },
+      { question: "What does SCOT stand for?", options: ["Shared Computer Operated Transport", "Systematic Computer Optimized Transport", "Sensory Controlled Operations Terminal", "Simulated Computer Output Tech"], answer: "Shared Computer Operated Transport" },
+      { question: "SCOT is an autonomous driverless car developed by the National University of Singapore in collaboration with:", options: ["Harvard", "Waseda University", "MIT", "De La Salle University"], answer: "MIT" },
+      { question: "Who led the development of SCOT?", options: ["Marcelo Ang", "Hiroshi Makino", "Marvin Minsky", "George Devol"], answer: "Marcelo Ang" },
+      { question: "What does BRAVE stand for?", options: ["Bomb Removal Automated Vehicle", "Bipedal Robotic Automated Vehicle", "Basic Remote Arm Vehicle", "Bio-Robotic Arm Vehicle Explorer"], answer: "Bomb Removal Automated Vehicle" },
+      { question: "Which university developed BRAVE for bomb disposal and remote inspection?", options: ["National University of Singapore", "Waseda University", "De La Salle University", "MIT"], answer: "De La Salle University" },
+      { question: "What was the name of the first rover on Mars?", options: ["Sojourner", "Spirit", "Opportunity", "Curiosity"], answer: "Sojourner" },
+      { question: "When did the Sojourner rover launch?", options: ["Dec 4, 1996", "July 4, 1997", "June 10, 2003", "Nov 26, 2011"], answer: "Dec 4, 1996" },
+      { question: "When did the Sojourner rover land on Mars?", options: ["Dec 4, 1996", "July 4, 1997", "Jan 3, 2004", "Jan 24, 2004"], answer: "July 4, 1997" },
+      { question: "Which Mars rover found evidence of past water and ancient explosive volcanic activity before getting permanently stuck in soft sand?", options: ["Sojourner", "Spirit", "Opportunity", "Curiosity"], answer: "Spirit" },
+      { question: "When did the Spirit rover launch?", options: ["Dec 4, 1996", "June 10, 2003", "July 7, 2003", "Nov 26, 2011"], answer: "June 10, 2003" },
+      { question: "When did the Spirit rover land?", options: ["July 4, 1997", "Jan 3, 2004", "Jan 24, 2004", "Aug 6, 2012"], answer: "Jan 3, 2004" },
+      { question: "Which Mars rover discovered hematite 'blueberries' proving ancient acidic water existed?", options: ["Sojourner", "Spirit", "Opportunity", "Perseverance"], answer: "Opportunity" },
+      { question: "When did the Opportunity rover launch?", options: ["June 10, 2003", "July 7, 2003", "Nov 26, 2011", "July 30, 2020"], answer: "July 7, 2003" },
+      { question: "When did the Opportunity rover land?", options: ["Jan 3, 2004", "Jan 24, 2004", "Aug 6, 2012", "Feb 18, 2021"], answer: "Jan 24, 2004" },
+      { question: "When did the Opportunity rover's mission end?", options: ["March 2010", "June 2018", "July 2020", "Active today"], answer: "June 2018" },
+      { question: "The Opportunity rover holds the off-Earth driving record of:", options: ["15.50 miles", "28.06 miles", "40.12 miles", "50.00 miles"], answer: "28.06 miles" },
+      { question: "Which rover pioneered the autonomous 'Sky Crane' landing method?", options: ["Spirit", "Opportunity", "Curiosity", "Perseverance"], answer: "Curiosity" },
+      { question: "When did the Curiosity rover launch?", options: ["July 7, 2003", "Nov 26, 2011", "July 30, 2020", "Dec 4, 1996"], answer: "Nov 26, 2011" },
+      { question: "When did the Curiosity rover land?", options: ["Jan 24, 2004", "Aug 6, 2012", "Feb 18, 2021", "July 4, 1997"], answer: "Aug 6, 2012" },
+      { question: "Which rover deployed Ingenuity, the first helicopter to fly on another planet?", options: ["Curiosity", "Perseverance", "Opportunity", "Spirit"], answer: "Perseverance" },
+      { question: "When did the Perseverance rover launch?", options: ["Nov 26, 2011", "July 30, 2020", "Aug 6, 2012", "Feb 18, 2021"], answer: "July 30, 2020" },
+      { question: "When did the Perseverance rover land?", options: ["Aug 6, 2012", "Feb 18, 2021", "June 2018", "March 2010"], answer: "Feb 18, 2021" },
+      { question: "What does SCARA stand for?", options: ["Systematic Controlled Articulated Robot Arm", "Selective Compliance Articulated Robot Arm", "Sequential Computer Automated Robot Arm", "Standard Compliant Articulated Robot Assembly"], answer: "Selective Compliance Articulated Robot Arm" },
+      { question: "Who invented the SCARA architecture in 1978?", options: ["Professor Hiroshi Makino", "Marcelo Ang", "George Devol", "Marvin Minsky"], answer: "Professor Hiroshi Makino" },
+      { question: "Who coined the phrase 'Data is the new oil' in relation to Data Mining?", options: ["Alan Turing", "Clive Humby", "Elon Musk", "George Boole"], answer: "Clive Humby" },
+      { question: "What is defined as the scientific process of extracting valuable information from both structured and unstructured data?", options: ["Data Mining", "Data Science", "Boolean Algebra", "Cybernetics"], answer: "Data Science" }
+    ];
 
-        <!-- Quiz Area (Visible during quiz) -->
-        <div id="quiz-area" class="relative z-10">
-            
-            <!-- Progress Bar -->
-            <div class="mb-8">
-                <div class="flex justify-between text-sm text-slate-400 mb-2 font-medium">
-                    <span id="question-tracker">Question 1 of 15</span>
-                    <span id="score-tracker">Score: 0</span>
-                </div>
-                <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden border border-slate-700">
-                    <div id="progress-bar-fill" class="h-full bg-gradient-to-r from-blue-500 to-purple-500 w-0 transition-all duration-500 ease-out"></div>
-                </div>
-            </div>
-
-            <!-- Question & Options -->
-            <div id="question-container" class="fade-in">
-                <h2 id="question-text" class="text-xl sm:text-2xl font-semibold mb-6 leading-relaxed">
-                    Loading question...
-                </h2>
-                <div id="options-container" class="flex flex-col gap-3 sm:gap-4">
-                    <!-- Options injected here by JS -->
-                </div>
-            </div>
-
-            <!-- Feedback Message (Correct/Wrong) -->
-            <div id="feedback-message" class="mt-6 text-center text-lg font-semibold h-8 opacity-0 transition-opacity duration-300">
-                <!-- Feedback injected here -->
-            </div>
-        </div>
-
-        <!-- Results Area (Hidden by default) -->
-        <div id="results-area" class="relative z-10 hidden text-center py-8 fade-in">
-            <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-slate-800 border-4 border-purple-500 mb-6">
-                <svg class="w-12 h-12 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <h2 class="text-3xl font-bold text-white mb-2">Quiz Completed!</h2>
-            <p class="text-slate-300 text-lg mb-6">You scored <span id="final-score" class="text-2xl font-bold text-blue-400">0</span> out of <span id="total-questions" class="font-bold">70</span>.</p>
-            
-            <button onclick="restartQuiz()" class="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold rounded-xl shadow-lg shadow-purple-500/30 transform hover:-translate-y-1 transition-all duration-200">
-                Retake Quiz
-            </button>
-        </div>
-
-    </main>
-
-    <script>
-        // Quiz Data containing exactly 70 distinct questions based on the provided notes
-        const quizData = [
-            { question: "Who invented the textile machine operated by punch cards in 1801?", options: ["Charles Babbage", "George Boole", "Joseph Jacquard", "Nikola Tesla"], answer: "Joseph Jacquard" },
-            { question: "In what year did Joseph-Marie Jacquard invent the Jacquard loom?", options: ["1752", "1801", "1804", "1835"], answer: "1804" },
-            { question: "What control system did the Jacquard loom utilize?", options: ["Hydraulics", "Punch cards", "Magnetic tape", "Vacuum tubes"], answer: "Punch cards" },
-            { question: "Who designed a motorized crane with a gripper in 1892?", options: ["Seward Babbitt", "Thomas Edison", "Raymond Goertz", "George Westinghouse"], answer: "Seward Babbitt" },
-            { question: "What was the purpose of Seward Babbitt's 1892 motorized crane?", options: ["Building skyscrapers", "To remove ingots from a furnace", "Loading ships", "Mining coal"], answer: "To remove ingots from a furnace" },
-            { question: "In which 1921 play did the word 'robot' first appear?", options: ["Runaround", "Metropolis", "Rossum’s Universal Robots", "Cybernetics"], answer: "Rossum’s Universal Robots" },
-            { question: "Who wrote the play Rossum’s Universal Robots?", options: ["Isaac Asimov", "Karel Čapek", "George Devol", "Alan Turing"], answer: "Karel Čapek" },
-            { question: "What does the Czech word 'robota' mean?", options: ["Mechanical man", "Artificial intelligence", "Serf or forced labor", "Metal worker"], answer: "Serf or forced labor" },
-            { question: "Who formulated the 'Three Laws of Robotics'?", options: ["Norbert Wiener", "Alan Turing", "Isaac Asimov", "Karel Čapek"], answer: "Isaac Asimov" },
-            { question: "In what year did Isaac Asimov introduce robots designed for humanity and safety?", options: ["1921", "1939", "1942", "1954"], answer: "1939" },
-            { question: "Which 1942 short story by Isaac Asimov featured the Three Laws of Robotics?", options: ["Runaround", "I, Robot", "Bicentennial Man", "Foundation"], answer: "Runaround" },
-            { question: "Who patented a general-purpose playback device for controlling machines in 1946?", options: ["Joseph Engelberger", "George Devol", "Marvin Minsky", "Hiroshi Makino"], answer: "George Devol" },
-            { question: "Who designed the first programmable robot in 1954?", options: ["Raymond Goertz", "Joseph Engelberger", "George Devol", "Norbert Wiener"], answer: "George Devol" },
-            { question: "Who coined the term 'universal automation'?", options: ["George Devol", "Joseph Engelberger", "Karel Čapek", "Isaac Asimov"], answer: "George Devol" },
-            { question: "Who joined George Devol in 1956 to form Unimation?", options: ["Marvin Minsky", "Joseph Engelberger", "Raymond Goertz", "Alan Turing"], answer: "Joseph Engelberger" },
-            { question: "What was the name of the first successful robot manufacturing company?", options: ["Kawasaki Robotics", "Honda Motor Co.", "Unimation", "Intuitive Surgical"], answer: "Unimation" },
-            { question: "In 1961, George Devol received a patent for what kind of robot?", options: ["Bipedal humanoid", "Arm-type industrial robot", "Autonomous rover", "Tele-operator"], answer: "Arm-type industrial robot" },
-            { question: "Which automotive company widely used the Unimate arm-type industrial robot?", options: ["Ford", "Toyota", "GM", "Honda"], answer: "GM" },
-            { question: "Who published the book Cybernetics in 1948?", options: ["Norbert Wiener", "Warren S. McCulloch", "Alan Turing", "Walt Pitts"], answer: "Norbert Wiener" },
-            { question: "What topic did Norbert Wiener's book 'Cybernetics' describe?", options: ["AC power systems", "Boolean algebra", "Communications and control in electronic, mechanical, and biological systems", "Orbital mechanics"], answer: "Communications and control in electronic, mechanical, and biological systems" },
-            { question: "Who designed a tele-operator with an articulated arm in 1951?", options: ["George Devol", "Marvin Minsky", "Raymond Goertz", "Seward Babbitt"], answer: "Raymond Goertz" },
-            { question: "For which commission did Raymond Goertz design the 1951 tele-operator?", options: ["Atomic Energy Commission", "Federal Communications Commission", "Space Exploration Commission", "National Science Foundation"], answer: "Atomic Energy Commission" },
-            { question: "Who built an early version of the calculator in 1642?", options: ["Benjamin Franklin", "Thomas Edison", "Charles Babbage", "Blaise Pascal"], answer: "Blaise Pascal" },
-            { question: "Who conducted a kite experiment in 1752 proving lightning is electricity?", options: ["Benjamin Franklin", "Nikola Tesla", "Thomas Edison", "Joseph John Thomson"], answer: "Benjamin Franklin" },
-            { question: "Who designed the analytical engine in 1835?", options: ["Charles Babbage", "George Boole", "Joseph Jacquard", "Blaise Pascal"], answer: "Charles Babbage" },
-            { question: "What was a key feature of Charles Babbage's analytical engine?", options: ["Hydraulic power", "Processor and memory functions", "Radio control", "AC induction"], answer: "Processor and memory functions" },
-            { question: "Who published Mathematical Analysis of Logic in 1847?", options: ["Alan Turing", "Blaise Pascal", "George Boole", "Charles Babbage"], answer: "George Boole" },
-            { question: "George Boole's work laid the foundation for which type of math widely used in computing?", options: ["Calculus", "Boolean algebra", "Trigonometry", "Linear algebra"], answer: "Boolean algebra" },
-            { question: "Who created the concept for the modern AC induction motor in 1882?", options: ["Thomas Edison", "Nikola Tesla", "George Westinghouse", "Benjamin Franklin"], answer: "Nikola Tesla" },
-            { question: "Where did Nikola Tesla design the first AC power plant in 1895?", options: ["Hoover Dam", "Niagara Falls", "New York City", "London"], answer: "Niagara Falls" },
-            { question: "What design did Nikola Tesla patent in 1898?", options: ["Talking doll", "Analytical engine", "Radio-controlled boat", "AC power plant"], answer: "Radio-controlled boat" },
-            { question: "Who invented a talking doll in 1887?", options: ["Nikola Tesla", "Thomas Edison", "Charles Babbage", "George Boole"], answer: "Thomas Edison" },
-            { question: "Who conducted experiments in 1897 to infer the existence of the electron?", options: ["Joseph John Thomson", "Benjamin Franklin", "Nikola Tesla", "Thomas Edison"], answer: "Joseph John Thomson" },
-            { question: "Who published a 1937 paper on mathematics of fundamental importance to future computers?", options: ["Alan Turing", "George Boole", "Norbert Wiener", "Warren S. McCulloch"], answer: "Alan Turing" },
-            { question: "Who co-authored 'A Logical Calculus of the Ideas Immanent in Nervous Activity' with Walt Pitts?", options: ["Alan Turing", "Warren S. McCulloch", "Norbert Wiener", "Marvin Minsky"], answer: "Warren S. McCulloch" },
-            { question: "What was the main focus of McCulloch and Pitts in their 1943 publication?", options: ["AC power distribution", "To understand how the brain works / thinking computers", "Robotics laws", "Space exploration"], answer: "To understand how the brain works / thinking computers" },
-            { question: "Which company started producing hydraulically powered robots under the Unimation license in 1968?", options: ["Kawasaki Robotics", "Honda", "Toyota", "Sony"], answer: "Kawasaki Robotics" },
-            { question: "Who developed a robot arm based on the design of a tentacle in 1968?", options: ["Marvin Minsky", "Hiroshi Makino", "George Devol", "Raymond Goertz"], answer: "Marvin Minsky" },
-            { question: "How many joints did Marvin Minsky's tentacle arm have?", options: ["6", "8", "12", "15"], answer: "12" },
-            { question: "Which university created WABOT-1?", options: ["MIT", "Stanford University", "Waseda University", "National University of Singapore"], answer: "Waseda University" },
-            { question: "What major distinction does WABOT-1 hold in robotics history?", options: ["First rover on Mars", "First anthropomorphic robot", "First tele-operator", "First medical robot"], answer: "First anthropomorphic robot" },
-            { question: "What robot did Waseda University create in 2000 to reproduce human vocal movement?", options: ["ASIMO", "WABOT-2", "Waseda Talker No. 1", "P3"], answer: "Waseda Talker No. 1" },
-            { question: "Which company introduced the P2 bipedal humanoid robot in 1997?", options: ["Toyota", "Kawasaki", "Honda", "Tesla"], answer: "Honda" },
-            { question: "What advanced robot did Honda create in 2000 using lessons from P2 and P3?", options: ["ASIMO", "WABOT-1", "SCOT", "Atlas"], answer: "ASIMO" },
-            { question: "What does ASIMO stand for?", options: ["Automated System in Mechanical Operations", "Advanced Step in Innovative Mobility", "Articulated System of Intelligent Motion", "Anthropomorphic Step in Machine Optimization"], answer: "Advanced Step in Innovative Mobility" },
-            { question: "Who introduced the da Vinci medical robotic system in 1999?", options: ["Intuitive Surgical Inc.", "Honda", "Kawasaki Robotics", "Waseda University"], answer: "Intuitive Surgical Inc." },
-            { question: "Which company became the first privately owned entity to dock a robotic capsule with the ISS in 2012?", options: ["Blue Origin", "SpaceX", "Boeing", "Lockheed Martin"], answer: "SpaceX" },
-            { question: "What is the name of the SpaceX robotic capsule docked with the ISS?", options: ["Falcon", "Apollo", "Dragon", "Orion"], answer: "Dragon" },
-            { question: "Who is the founder of SpaceX mentioned in the notes?", options: ["Jeff Bezos", "Elon Musk", "Richard Branson", "Marcelo Ang"], answer: "Elon Musk" },
-            { question: "What does the acronym SCOT stand for?", options: ["Systematic Computer Operating Technology", "Shared Computer Operated Transport", "Self-driving Car On Tracks", "Smart Computer Operated Transit"], answer: "Shared Computer Operated Transport" },
-            { question: "Which two institutions collaborated to develop SCOT?", options: ["Stanford & MIT", "NUS & MIT", "Waseda & De la Salle", "Harvard & MIT"], answer: "NUS & MIT" },
-            { question: "Who led the development of SCOT?", options: ["Elon Musk", "Marcelo Ang", "Hiroshi Makino", "Marvin Minsky"], answer: "Marcelo Ang" },
-            { question: "What type of vehicle is SCOT?", options: ["Space rover", "Bomb disposal unit", "Autonomous driverless car", "Medical transport"], answer: "Autonomous driverless car" },
-            { question: "What does the acronym BRAVE stand for?", options: ["Basic Rover for Automated Vehicle Exploration", "Bomb Removal Automated Vehicle", "Bipedal Robot And Vehicle Explorer", "Biometric Robotic Automated Vehicle Entity"], answer: "Bomb Removal Automated Vehicle" },
-            { question: "Which university developed the BRAVE robot?", options: ["National University of Singapore", "De la Salle University", "Waseda University", "Yamanashi University"], answer: "De la Salle University" },
-            { question: "Which was the first rover on Mars, launched in 1996?", options: ["Spirit", "Sojourner", "Curiosity", "Opportunity"], answer: "Sojourner" },
-            { question: "What major discovery did the Sojourner rover make?", options: ["Hematite 'blueberries'", "Evidence of ancient liquid water", "Complex organic molecules", "Volcanic glass"], answer: "Evidence of ancient liquid water" },
-            { question: "Which Mars rover, launched in June 2003, got permanently stuck in soft sand?", options: ["Sojourner", "Spirit", "Perseverance", "Curiosity"], answer: "Spirit" },
-            { question: "What did the Spirit rover find evidence of besides past water?", options: ["Ancient explosive volcanic activity", "Alien life", "Underground rivers", "Organic molecules"], answer: "Ancient explosive volcanic activity" },
-            { question: "Which rover discovered hematite 'blueberries' proving ancient acidic water existed?", options: ["Opportunity", "Spirit", "Curiosity", "Perseverance"], answer: "Opportunity" },
-            { question: "Which rover holds the off-Earth driving record at 28.06 miles?", options: ["Curiosity", "Sojourner", "Spirit", "Opportunity"], answer: "Opportunity" },
-            { question: "Which Mars rover pioneered the autonomous 'Sky Crane' landing method?", options: ["Sojourner", "Spirit", "Perseverance", "Curiosity"], answer: "Curiosity" },
-            { question: "What did the Curiosity rover discover on Mars?", options: ["Hematite blueberries", "Complex organic molecules and ancient habitable lake beds", "Active volcanoes", "Liquid water on the surface"], answer: "Complex organic molecules and ancient habitable lake beds" },
-            { question: "Which rover, launched in July 2020, is caching rock cores for a future Earth-return mission?", options: ["Opportunity", "Curiosity", "Perseverance", "Spirit"], answer: "Perseverance" },
-            { question: "What is the name of the first helicopter to fly on another planet, deployed by Perseverance?", options: ["Ingenuity", "Discovery", "Explorer", "Pioneer"], answer: "Ingenuity" },
-            { question: "What does SCARA stand for?", options: ["Smart Computer Automated Robot Arm", "Selective Compliance Articulated Robot Arm", "Systematic Control And Robotic Articulation", "Standard Compliance And Robotic Arm"], answer: "Selective Compliance Articulated Robot Arm" },
-            { question: "Who invented the SCARA robotic architecture?", options: ["Professor Hiroshi Makino", "George Devol", "Joseph Engelberger", "Marcelo Ang"], answer: "Professor Hiroshi Makino" },
-            { question: "At which university was SCARA invented in 1978?", options: ["Waseda University", "Yamanashi University", "National University of Singapore", "De la Salle University"], answer: "Yamanashi University" },
-            { question: "Who coined the phrase 'Data is the new oil'?", options: ["Alan Turing", "Norbert Wiener", "Clive Humby", "Elon Musk"], answer: "Clive Humby" },
-            { question: "What is the scientific process of extracting valuable info from structured/unstructured data called?", options: ["Data Mining", "Machine Learning", "Data Science", "Artificial Intelligence"], answer: "Data Science" }
-        ];
-
-        // State variables
-        let currentQuestionIndex = 0;
-        let score = 0;
-
-        // DOM Elements
-        const quizArea = document.getElementById('quiz-area');
-        const resultsArea = document.getElementById('results-area');
-        const questionText = document.getElementById('question-text');
-        const optionsContainer = document.getElementById('options-container');
-        const questionTracker = document.getElementById('question-tracker');
-        const scoreTracker = document.getElementById('score-tracker');
-        const progressBarFill = document.getElementById('progress-bar-fill');
-        const feedbackMessage = document.getElementById('feedback-message');
-        const questionContainer = document.getElementById('question-container');
-
-        // Initialize Quiz
-        function loadQuestion() {
-            // Reset state for new question
-            feedbackMessage.style.opacity = '0';
-            optionsContainer.innerHTML = '';
-            
-            // Re-trigger fade-in animation
-            questionContainer.classList.remove('fade-in');
-            void questionContainer.offsetWidth; // Trigger reflow
-            questionContainer.classList.add('fade-in');
-
-            const currentQuestion = quizData[currentQuestionIndex];
-            
-            // Update UI trackers
-            questionTracker.innerText = `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
-            scoreTracker.innerText = `Score: ${score}`;
-            questionText.innerText = currentQuestion.question;
-            
-            // Update Progress Bar
-            const progressPercentage = ((currentQuestionIndex) / quizData.length) * 100;
-            progressBarFill.style.width = `${progressPercentage}%`;
-
-            // Create option buttons
-            currentQuestion.options.forEach(option => {
-                const button = document.createElement('button');
-                button.innerText = option;
-                // Tailwind classes for buttons
-                button.className = 'option-btn w-full text-left p-4 sm:p-5 rounded-xl bg-slate-800/60 hover:bg-slate-700 border border-slate-600 text-slate-200 font-medium text-base sm:text-lg shadow-sm hover:-translate-y-1 hover:shadow-md focus:outline-none';
-                button.onclick = () => checkAnswer(button, option, currentQuestion.answer);
-                optionsContainer.appendChild(button);
-            });
-        }
-
-        function checkAnswer(selectedButton, selectedOption, correctAnswer) {
-            // Disable all buttons immediately to prevent multiple clicks
-            const allButtons = optionsContainer.querySelectorAll('button');
-            allButtons.forEach(btn => btn.classList.add('disabled-btn'));
-
-            // Check if correct
-            if (selectedOption === correctAnswer) {
-                score++;
-                selectedButton.classList.add('correct-answer');
-                feedbackMessage.innerText = "Correct!";
-                feedbackMessage.className = "mt-6 text-center text-lg font-bold text-emerald-400";
-            } else {
-                selectedButton.classList.add('wrong-answer');
-                feedbackMessage.innerHTML = `Incorrect. <span class="text-slate-300 font-normal">The right answer was</span> <b class="text-emerald-400">${correctAnswer}</b>.`;
-                feedbackMessage.className = "mt-6 text-center text-lg font-bold text-rose-400";
-                
-                // Highlight the correct answer as well
-                allButtons.forEach(btn => {
-                    if (btn.innerText === correctAnswer) {
-                        btn.classList.add('!border-emerald-500', '!text-emerald-400', 'bg-slate-800/90');
-                    }
-                });
-            }
-
-            scoreTracker.innerText = `Score: ${score}`;
-            feedbackMessage.style.opacity = '1';
-
-            // Wait 2 seconds before moving to next question
-            setTimeout(() => {
-                currentQuestionIndex++;
-                if (currentQuestionIndex < quizData.length) {
-                    loadQuestion();
-                } else {
-                    showResults();
-                }
-            }, 2500); // slightly longer delay so the user can read the correct answer
-        }
-
-        function showResults() {
-            // Hide quiz, show results
-            quizArea.classList.add('hidden');
-            resultsArea.classList.remove('hidden');
-            
-            // Set final progress bar to 100% (hidden technically, but good practice)
-            progressBarFill.style.width = '100%';
-
-            // Populate scores
-            document.getElementById('final-score').innerText = score;
-            document.getElementById('total-questions').innerText = quizData.length;
-        }
-
-        function restartQuiz() {
-            // Reset variables
-            currentQuestionIndex = 0;
-            score = 0;
-            
-            // Toggle visibility
-            resultsArea.classList.add('hidden');
-            quizArea.classList.remove('hidden');
-            
-            // Start again
-            loadQuestion();
-        }
-// --- ADD THIS SHUFFLE CODE ---
+    // --- SHUFFLE FUNCTION ADDED HERE ---
     function shuffleArray(array) {
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
       }
     }
-
-    // Shuffle the questions before starting the quiz
+    
+    // Randomize the 70 questions before starting
     shuffleArray(quizData);
-    // -----------------------------
+    // -----------------------------------
 
-    // This line should already be at the very bottom!
+    let currentQuestion = 0;
+    let score = 0;
+
+    function loadQuestion() {
+      const feedback = document.getElementById("feedback");
+      feedback.innerText = "";
+      feedback.style.color = "#fff";
+
+      // Update progress bar
+      const progress = ((currentQuestion) / quizData.length) * 100;
+      document.getElementById("progress-bar").style.width = `${progress}%`;
+
+      if (currentQuestion >= quizData.length) {
+        document.getElementById("quiz-container").innerHTML = `
+          <div class="score-text">Quiz Complete!</div>
+          <p style="text-align:center;">You scored <strong>${score}</strong> out of ${quizData.length}.</p>
+          <button class="option-btn" style="text-align:center; background:#4facfe; color:#fff;" onclick="location.reload()">Restart Quiz</button>
+        `;
+        document.getElementById("quiz-title").style.display = "none";
+        return;
+      }
+      
+      const q = quizData[currentQuestion];
+      document.getElementById("question-text").innerText = `Q${currentQuestion + 1}: ${q.question}`;
+      
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      // Shuffle the options so they aren't always in the same place
+      let shuffledOptions = [...q.options];
+      shuffleArray(shuffledOptions);
+
+      shuffledOptions.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.innerText = opt;
+        btn.onclick = (e) => checkAnswer(opt, q.answer, e.target, optionsContainer);
+        optionsContainer.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(selected, correct, clickedBtn, container) {
+      const buttons = container.querySelectorAll("button");
+      buttons.forEach(btn => btn.disabled = true); // Lock answers
+
+      const feedback = document.getElementById("feedback");
+
+      if (selected === correct) {
+        score++;
+        clickedBtn.classList.add("correct-btn");
+        feedback.innerText = "Correct!";
+        feedback.style.color = "#28a745";
+      } else {
+        clickedBtn.classList.add("wrong-btn");
+        feedback.innerText = `Wrong! The correct answer was: ${correct}`;
+        feedback.style.color = "#dc3545";
+        
+        // Highlight correct answer
+        buttons.forEach(btn => {
+          if (btn.innerText === correct) btn.classList.add("correct-btn");
+        });
+      }
+      
+      currentQuestion++;
+      setTimeout(loadQuestion, 2000); // 2-second delay to read the result
+    }
+
     loadQuestion();
   </script>
-</body>
-</html>
-        // Initialize first question on load
-        loadQuestion();
-    </script>
 </body>
 </html>
